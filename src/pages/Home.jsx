@@ -1,22 +1,33 @@
-import React from 'react'
-import Hero from '../components/Hero'
-import Shop from '../components/Shop'
-import Offer from '../components/Offer'
-import Contact from '../components/Contact'
+import React from 'react';
+import Hero from '../components/Hero';
+import Shop from '../components/Shop';
+import Offer from '../components/Offer';
+import Contact from '../components/Contact';
 
 const Home = () => {
   return (
     <div>
       {/* hero section */}
-      <Hero />
-      {/* shop section */}
-      <Shop />
-      {/* Offer section */}
-      <Offer />
-      {/* contact section */}
-      <Contact />
-    </div>
-  )
-}
+      <section id="home">
+        <Hero />
+      </section>
 
-export default Home
+      {/* shop section */}
+      <section id="shop">
+        <Shop />
+      </section>
+
+      {/* offer section */}
+      <section id="offer">
+        <Offer />
+      </section>
+
+      {/* contact section */}
+      <section id="contact">
+        <Contact />
+      </section>
+    </div>
+  );
+};
+
+export default Home;

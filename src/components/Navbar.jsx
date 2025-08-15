@@ -1,29 +1,43 @@
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = ({ containerStyles, activeMenu, setActiveMenu }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleNavClick = (section) => {
+    setActiveMenu(section);
+
+    if (location.pathname !== '/') {
+      navigate(`/#${section}`);
+    } else {
+      const el = document.getElementById(section);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
     <nav className={`${containerStyles}`}>
-      <a 
-        href="#home" 
-        className={`${activeMenu === 'home' ? 'active' : ''}`} 
-        onClick={() => setActiveMenu('home')}
+      <button
+        className={activeMenu === 'home' ? 'active' : ''}
+        onClick={() => handleNavClick('home')}
       >
         Home
-      </a>
-      <a 
-        href="#shop" 
-        className={` ${activeMenu === 'shop' ? 'active' : ''}`} 
-        onClick={() => setActiveMenu('shop')}
+      </button>
+      <button
+        className={activeMenu === 'shop' ? 'active' : ''}
+        onClick={() => handleNavClick('shop')}
       >
         Shop
-      </a>
-      <a 
-        href="#contact" 
-        className={` ${activeMenu === 'contact' ? 'active' : ''}`} 
-        onClick={() => setActiveMenu('contact')}
+      </button>
+      <button
+        className={activeMenu === 'contact' ? 'active' : ''}
+        onClick={() => handleNavClick('contact')}
       >
         Contact
-      </a>
+      </button>
     </nav>
   );
 };

@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 
 const Offer = () => {
   const calculateTimeLeft = () => {
-    const difference = +new Date('2024-12-31T12:15:10') - +new Date();
+    const difference = +new Date('2025-12-31T12:15:10') - +new Date();
     let timeLeft = {};
 
     if (difference > 0) {
       timeLeft = {
         days: String(Math.floor(difference / (1000 * 60 * 60 * 24))).padStart(2, '0'),
         hours: String(Math.floor((difference / (1000 * 60 * 60)) % 24)).padStart(2, '0'),
-        minutes: String(Math.floor((difference / 1000 / 60) % 24)).padStart(2, '0'),
+        minutes: String(Math.floor((difference / 1000 / 60) % 60)).padStart(2, '0'),
         seconds: String(Math.floor((difference / 1000) % 60)).padStart(2, '0'),
       };
     } else {
@@ -27,36 +27,30 @@ const Offer = () => {
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const interval = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
 
-    return () => clearTimeout(timer);
-  });
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <section className='max-padd-container bg-banner bg-center bg-cover bg-no-repeat h-[555px] p-8 rounded-xl'>
-      <div className='flex items-center flex-col gap-1 mt-40 max-w-xl'>
-        <h3 className='uppercase medium-20'>Sales</h3>
-        <h2 className='bold-40 uppercase'>30% Off on all products</h2>
-        <span className='italic font-ace'>Offer ends in</span>
-        <div className='flex gap-x-4 xs:gap-x-7 mt-2'>
-          <div className='bg-white p-2 rounded-lg'>
-            <span className='font-bold text-4xl'>{timeLeft.days}</span>
-            <span className='block'>Days</span>
-          </div>
-          <div className='bg-white p-2 rounded-lg'>
-            <span className='font-bold text-4xl'>{timeLeft.hours}</span>
-            <span className='block'>Hours</span>
-          </div>
-          <div className='bg-white p-2 rounded-lg'>
-            <span className='font-bold text-4xl'>{timeLeft.minutes}</span>
-            <span className='block'>Minutes</span>
-          </div>
-          <div className='bg-white p-2 rounded-lg'>
-            <span className='font-bold text-4xl'>{timeLeft.seconds}</span>
-            <span className='block'>Seconds</span>
-          </div>
+    <section className="max-padd-container bg-banner bg-center bg-cover bg-no-repeat min-h-[555px] rounded-xl flex items-center justify-center px-4 py-20">
+      <div className="text-center max-w-2xl w-full">
+        <h3 className="uppercase medium-20 mb-2">Sales</h3>
+        <h2 className="bold-40 uppercase mb-2">30% Off on all products</h2>
+        <span className="italic font-ace text-base">Offer ends in</span>
+
+        <div className="grid grid-cols-4 gap-4 mt-6 max-sm:grid-cols-2 max-sm:gap-6">
+          {['days', 'hours', 'minutes', 'seconds'].map((key, idx) => (
+            <div
+              key={idx}
+              className="bg-white p-4 rounded-xl flex flex-col items-center shadow-md min-w-[70px]"
+            >
+              <span className="font-bold text-3xl sm:text-4xl text-tertiary">{timeLeft[key]}</span>
+              <span className="mt-1 text-sm capitalize text-gray-600">{key}</span>
+            </div>
+          ))}
         </div>
       </div>
     </section>
